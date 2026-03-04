@@ -6,94 +6,98 @@ $result = $conn->query($sql);
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #eef2f3;
+            background-color: #f5f5f5;
+            padding-top: 20px;
         }
-        .container {
-            width: 800px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 6px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .container-wrapper {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .page-title {
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: bold;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
+        .table-wrapper {
+            margin-top: 20px;
         }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #0066cc;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .add-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
+        .profile-img {
+            max-height: 50px;
             border-radius: 4px;
         }
-        .add-btn:hover {
-            background-color: #45a049;
+        .btn-sm {
+            margin: 2px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2>All Users</h2>
-    <a href="register.php" class="add-btn">Add New User</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand">User Management</span>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="home.php">Home</a>
+                <a class="nav-link" href="logout.php">Logout</a>
+            </div>
+        </div>
+    </nav>
 
-    <table>
-    <tr>
-        <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
-        <th>Profile Pic</th>
-        <th>Actions</th>
-    </tr>
-    <?php   
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $profile_pic = isset($row['profile_pic']) && $row['profile_pic'] != '' ? $row['profile_pic'] : 'no-image.png';
-            ?>
-            <tr>
-                <td><?= $row['id'] ?></td>
-                <td><?= htmlspecialchars($row['fname']) ?></td>
-                <td><?= htmlspecialchars($row['lname']) ?></td>
-                <td><?= htmlspecialchars($row['username']) ?></td>
-                <td><img src="<?= $profile_pic ?>" alt="Profile Picture" width="50" style="max-height:50px;"></td>
-                <td>
-                    <a href="view.php?id=<?= $row['id'] ?>">View</a> |
-                    <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                </td>
-            </tr>
-            <?php
-        }
-    } else {
-        echo "<tr><td colspan='6'>No users found</td></tr>";
-    }
-    ?>
-    </table>
-</div>
+    <div class="container mt-5">
+        <div class="container-wrapper">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="page-title mb-0">All Users</h2>
+                <a href="register.php" class="btn btn-success">Add New User</a>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                            <th>Profile Picture</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php   
+                        if ($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                $profile_pic = isset($row['profile_pic']) && $row['profile_pic'] != '' && file_exists('uploads/' . $row['profile_pic']) ? 'uploads/' . $row['profile_pic'] : 'https://via.placeholder.com/50';
+                                ?>
+                                <tr>
+                                    <td><?= $row['id'] ?></td>
+                                    <td><?= htmlspecialchars($row['fname']) ?></td>
+                                    <td><?= htmlspecialchars($row['lname']) ?></td>
+                                    <td><?= htmlspecialchars($row['username']) ?></td>
+                                    <td><img src="<?= $profile_pic ?>" alt="Profile Picture" class="profile-img"></td>
+                                    <td>
+                                        <a href="view.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-primary">View</a>
+                                        <a href="delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='6' class='text-center text-muted'>No users found</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

@@ -15,63 +15,118 @@ if ($result->num_rows > 0) {
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #eef2f3;
+            background-color: #f5f5f5;
+            padding-top: 20px;
         }
-        .container {
-            width: 500px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 6px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .detail-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        li strong {
+        .detail-title {
             color: #333;
+            margin-bottom: 30px;
+            font-weight: bold;
         }
-        a {
-            display: inline-block;
+        .detail-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .detail-value {
+            color: #333;
+            margin-top: 5px;
+        }
+        .profile-pic-container {
+            text-align: center;
             margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
+            margin-bottom: 20px;
         }
-        a:hover {
-            background-color: #45a049;
+        .profile-pic {
+            max-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2>User Details</h2>
-<ul>
-    <li><strong>First Name:</strong> <?= htmlspecialchars($row['fname']) ?></li>
-    <li><strong>Last Name:</strong> <?= htmlspecialchars($row['lname']) ?></li>
-    <li><strong>Address:</strong> <?= htmlspecialchars($row['address']) ?></li>
-    <li><strong>Country:</strong> <?= htmlspecialchars($row['country']) ?></li>
-    <li><strong>Gender:</strong> <?= htmlspecialchars($row['gender']) ?></li>
-    <li><strong>Skills:</strong> <?= htmlspecialchars($row['skills']) ?></li>
-    <li><strong>Username:</strong> <?= htmlspecialchars($row['username']) ?></li>
-    <li><strong>Department:</strong> <?= htmlspecialchars($row['department']) ?></li>
-    <li><strong>Profile Picture:</strong> <img src="<?= $row['profile_pic'] ?>" alt="Profile" style="max-width: 150px; max-height: 150px;"></li>
-</ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand">User Details</span>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="list.php">Back to List</a>
+                <a class="nav-link" href="logout.php">Logout</a>
+            </div>
+        </div>
+    </nav>
 
-    <a href="list.php">Back to List</a>
-</div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="detail-container">
+                    <h2 class="detail-title"><?= htmlspecialchars($row['fname']) ?> <?= htmlspecialchars($row['lname']) ?></h2>
+                    
+                    <div class="profile-pic-container">
+                        <?php if (!empty($row['profile_pic']) && file_exists('uploads/' . $row['profile_pic'])): ?>
+                            <img src="uploads/<?= htmlspecialchars($row['profile_pic']) ?>" alt="Profile" class="profile-pic">
+                        <?php else: ?>
+                            <img src="https://via.placeholder.com/200" alt="No Profile Picture" class="profile-pic">
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Username:</div>
+                        <div class="detail-value"><?= htmlspecialchars($row['username']) ?></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Address:</div>
+                        <div class="detail-value"><?= htmlspecialchars($row['address']) ?></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Country:</div>
+                        <div class="detail-value"><?= htmlspecialchars($row['country']) ?></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Gender:</div>
+                        <div class="detail-value"><?= htmlspecialchars($row['gender']) ?></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Skills:</div>
+                        <div class="detail-value"><?= htmlspecialchars($row['skills']) ?></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Department:</div>
+                        <div class="detail-value"><?= htmlspecialchars($row['department']) ?></div>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="list.php" class="btn btn-primary">Back to List</a>
+                        <a href="delete.php?id=<?= $row['id'] ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

@@ -1,77 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #eef2f3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .container {
-            width: 400px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 6px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
         }
-
-        label {
-            display: block;
-            margin-top: 10px;
+        .login-title {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
             font-weight: bold;
         }
-
-        input {
-            display: block;
-            margin-top: 5px;
-            margin-bottom: 10px;
+        .btn-login {
             width: 100%;
-            padding: 5px;
-            box-sizing: border-box;
-        }
-
-        button {
             margin-top: 10px;
-            padding: 5px 15px;
-            margin-right: 5px;
         }
-
-        .link {
-            margin-top: 15px;
+        .login-footer {
             text-align: center;
+            margin-top: 20px;
+            color: #666;
         }
-
-        .link a {
-            color: #0066cc;
+        .login-footer a {
+            color: #667eea;
             text-decoration: none;
+            font-weight: bold;
         }
-
-        .link a:hover {
+        .login-footer a:hover {
             text-decoration: underline;
+        }
+        .alert {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2>Login</h2>
-    <form method="POST" action="auth.php">
+    <div class="login-container">
+        <h2 class="login-title">User Login</h2>
+        
+        <?php if (isset($_GET['error'])): ?>
+            <div class="alert alert-danger" role="alert">
+                <?= htmlspecialchars($_GET['error']) ?>
+            </div>
+        <?php endif; ?>
 
-        <label>Username:</label>
-        <input type="text" name="username" required minlength="4" pattern="[A-Za-z0-9_]+" title="At least 4 characters">
+        <form method="POST" action="auth.php">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required minlength="4" pattern="[A-Za-z0-9_]+" title="At least 4 characters">
+            </div>
 
-        <label>Password:</label>
-        <input type="password" name="password" required minlength="6" title="Password must be at least 6 characters">
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required minlength="6" title="Password must be at least 6 characters">
+            </div>
 
-        <button type="submit">Login</button>
-        <button type="reset">Reset</button>
+            <button type="submit" class="btn btn-primary btn-login">Login</button>
+            <button type="reset" class="btn btn-outline-secondary btn-login">Reset</button>
+        </form>
 
-    </form>
-
-    <div class="link">
-        <p>Don't have an account? <a href="register.php">Register here</a></p>
+        <div class="login-footer">
+            <p>Don't have an account? <a href="register.php">Register here</a></p>
+        </div>
     </div>
-</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
