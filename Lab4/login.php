@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Registration Formddd</title>
+    <title>Login Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,7 +23,7 @@
             font-weight: bold;
         }
 
-        input, textarea, select {
+        input {
             display: block;
             margin-top: 5px;
             margin-bottom: 10px;
@@ -32,20 +32,31 @@
             box-sizing: border-box;
         }
 
-        .checkbox-group, .radio-group {
-            margin-top: 5px;
-        }
-
         button {
             margin-top: 10px;
             padding: 5px 15px;
+            margin-right: 5px;
+        }
+
+        .link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .link a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>Registration Form</h2>
-    <form method="POST" action="save.php">
+    <h2>Login</h2>
+    <form method="POST" action="auth.php">
 
         <label>Username:</label>
         <input type="text" name="username" required minlength="4" pattern="[A-Za-z0-9_]+" title="At least 4 characters">
@@ -57,6 +68,10 @@
         <button type="reset">Reset</button>
 
     </form>
+
+    <div class="link">
+        <p>Don't have an account? <a href="register.php">Register here</a></p>
+    </div>
 </div>
 </body>
 </html>

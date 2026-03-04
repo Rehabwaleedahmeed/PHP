@@ -59,14 +59,15 @@ if ($result->num_rows > 0) {
 <div class="container">
     <h2>User Details</h2>
 <ul>
-    <li>First Name: <?= $row[0] ?></li>
-    <li>Last Name: <?= $row[1] ?></li>
-    <li>Address: <?= $row[2] ?></li>
-    <li>Country: <?= $row[3] ?></li>
-    <li>Gender: <?= $row[4] ?></li>
-    <li>Username: <?= $row[6] ?></li>
-    <li>Password: <?= $row[7] ?></li>
-    <li>Department: <?= $row[8] ?></li>
+    <li><strong>First Name:</strong> <?= htmlspecialchars($row['fname']) ?></li>
+    <li><strong>Last Name:</strong> <?= htmlspecialchars($row['lname']) ?></li>
+    <li><strong>Address:</strong> <?= htmlspecialchars($row['address']) ?></li>
+    <li><strong>Country:</strong> <?= htmlspecialchars($row['country']) ?></li>
+    <li><strong>Gender:</strong> <?= htmlspecialchars($row['gender']) ?></li>
+    <li><strong>Skills:</strong> <?= htmlspecialchars($row['skills']) ?></li>
+    <li><strong>Username:</strong> <?= htmlspecialchars($row['username']) ?></li>
+    <li><strong>Department:</strong> <?= htmlspecialchars($row['department']) ?></li>
+    <li><strong>Profile Picture:</strong> <img src="<?= $row['profile_pic'] ?>" alt="Profile" style="max-width: 150px; max-height: 150px;"></li>
 </ul>
 
     <a href="list.php">Back to List</a>
