@@ -1,6 +1,7 @@
 <?php
 include 'config.php';
 
+$errors = [];
 $data = [
     'fname' => $_POST['fname'] ?? '',
     'lname' => $_POST['lname'] ?? '',

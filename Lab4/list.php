@@ -67,27 +67,29 @@ $result = $conn->query($sql);
         <th>First Name</th>
         <th>Last Name</th>
         <th>Username</th>
+        <th>Profile Pic</th>
         <th>Actions</th>
     </tr>
     <?php   
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
+            $profile_pic = isset($row['profile_pic']) && $row['profile_pic'] != '' ? $row['profile_pic'] : 'no-image.png';
             ?>
             <tr>
                 <td><?= $row['id'] ?></td>
                 <td><?= htmlspecialchars($row['fname']) ?></td>
                 <td><?= htmlspecialchars($row['lname']) ?></td>
                 <td><?= htmlspecialchars($row['username']) ?></td>
+                <td><img src="<?= $profile_pic ?>" alt="Profile Picture" width="50" style="max-height:50px;"></td>
                 <td>
                     <a href="view.php?id=<?= $row['id'] ?>">View</a> |
                     <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
                 </td>
-                <td><img src="<?= $row['profile_pic'] ?>" alt="Profile Picture" width="80"></td>
             </tr>
             <?php
         }
     } else {
-        echo "<tr><td colspan='5'>No users found</td></tr>";
+        echo "<tr><td colspan='6'>No users found</td></tr>";
     }
     ?>
     </table>

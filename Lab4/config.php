@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$username = "root";
-$password = "";
+$username = "phpuser";
+$password = "phpuser123";
 $database = "lab3_db";
 $conn = new mysqli($host, $username, $password);
 if ($conn->connect_error) {
@@ -29,5 +29,13 @@ $table_sql = "CREATE TABLE IF NOT EXISTS users (
 if ($conn->query($table_sql) === TRUE) {
 } else {
     die("Error creating table: " . $conn->error);
+}
+
+// Add profile_pic column if it doesn't exist
+$check_column = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='users' AND COLUMN_NAME='profile_pic' AND TABLE_SCHEMA='$database'";
+$result = $conn->query($check_column);
+if ($result->num_rows === 0) {
+    $alter_table = "ALTER TABLE users ADD COLUMN profile_pic VARCHAR(255) DEFAULT '' NOT NULL";
+    $conn->query($alter_table);
 }
 ?>
