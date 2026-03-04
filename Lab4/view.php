@@ -80,8 +80,8 @@ if ($result->num_rows > 0) {
                     <h2 class="detail-title"><?= htmlspecialchars($row['fname']) ?> <?= htmlspecialchars($row['lname']) ?></h2>
                     
                     <div class="profile-pic-container">
-                        <?php if (!empty($row['profile_pic']) && file_exists('uploads/' . $row['profile_pic'])): ?>
-                            <img src="uploads/<?= htmlspecialchars($row['profile_pic']) ?>" alt="Profile" class="profile-pic">
+                        <?php if (!empty($row['profile_pic']) && file_exists($row['profile_pic'])): ?>
+                            <img src="<?= htmlspecialchars($row['profile_pic']) ?>" alt="Profile" class="profile-pic">
                         <?php else: ?>
                             <img src="https://via.placeholder.com/200" alt="No Profile Picture" class="profile-pic">
                         <?php endif; ?>

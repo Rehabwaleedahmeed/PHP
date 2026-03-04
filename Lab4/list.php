@@ -72,7 +72,7 @@ $result = $conn->query($sql);
                         <?php   
                         if ($result->num_rows > 0) {
                             while($row = $result->fetch_assoc()) {
-                                $profile_pic = isset($row['profile_pic']) && $row['profile_pic'] != '' && file_exists('uploads/' . $row['profile_pic']) ? 'uploads/' . $row['profile_pic'] : 'https://via.placeholder.com/50';
+                                $profile_pic = isset($row['profile_pic']) && $row['profile_pic'] != '' && file_exists($row['profile_pic']) ? $row['profile_pic'] : 'https://via.placeholder.com/50';
                                 ?>
                                 <tr>
                                     <td><?= $row['id'] ?></td>
