@@ -68,12 +68,25 @@ $stmt->bind_param(
     $target_file
 );
 
-if ($stmt->execute()) {
-    header("Location: list.php");
-    exit;
-} else {
-    echo "<p style='color:red;'>Error: " . $stmt->error . "</p>";
-    echo "<p><a href='register.php'>Go back</a></p>";
+try {
+    if ($stmt->execute()) {
+        header("Location: list.php");
+        exit;
+    } else {
+        $error_msg = $stmt->error;
+        if (strpos($error_msg, 'Duplicate entry') !== false) {
+            $error_msg = "Username already exists. Please choose a different username.";
+        }
+        echo "<p style='color:red;'>Error: " . $error_msg . "</p>";
+        echo "<p><a href='register.php'>Go back and try again</a></p>";
+    }
+} catch (mysqli_sql_exception $e) {
+    $error_msg = $e->getMessage();
+    if (strpos($error_msg, 'Duplicate entry') !== false) {
+        $error_msg = "Username already exists. Please choose a different username.";
+    }
+    echo "<p style='color:red;'>Error: " . $error_msg . "</p>";
+    echo "<p><a href='register.php'>Go back and try again</a></p>";
 }
 
 $stmt->close();
