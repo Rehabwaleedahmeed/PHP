@@ -20,10 +20,6 @@ if($result->num_rows === 1){
         exit;
     }
 }
-if(!isset($_SESSION['user_id'])){
-    header("Location: login.php");
-    exit;
-}
 echo "Logged in as: " . $_SESSION['username'];
 echo "<p style='color:red;'>Invalid Username or Password</p>";
 echo "<a href='login.php'>Try Again</a>";
